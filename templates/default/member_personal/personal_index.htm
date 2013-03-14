@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(1)>a").addClass("selected");
+	
+	$("#show_avatars_url").mouseover(function() {
+		$(".avatars_edit").show();
+		$("#show_avatars_url").mouseout(function() {
+		$(".avatars_edit").hide();
+		});	
+	});
+});
+</script>
+</head>
+<body>
+{#include file="member_personal/header.htm"#}
+<table width="960" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top" class="link_lan">
+	
+	
+	<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#D6E2ED" >
+      <tr>
+        <td>
+		
+		
+		
+		
+		<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#F9FCFF">
+          <tr>
+            <td>
+			<div style="font-size:14px; color: #006699; padding-top:5px; padding-left:10px;"> <strong>帐号信息</strong></div>
+			<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#F9FCFF" >
+            <tr>
+              <td width="120">
+			  <table border="0" cellpadding="0" cellspacing="1" bgcolor="#CDE6F3" style="margin:3px; padding:3px;" >
+                <tr>
+                  <td bgcolor="#FFFFFF"  >
+				  <div style=" position:relative"  id="show_avatars_url">
+				  <a href="personal_user.php?act=avatars">
+				  {#if $userprofile.avatars==""#}<img src="{#$QISHI.site_dir#}data/avatar/no_photo.gif" border="0"  width="100" height="100" />{#else#}<img src="{#$QISHI.site_dir#}data/avatar/100/{#$userprofile.avatars#}?rand={#$rand#}" border="0"   width="100" height="100"  />{#/if#}</a><div class="avatars_edit">修改头像</div>
+				  </div>				  </td>
+                </tr>
+              </table>			  </td>
+              <td valign="top">
+		 
+				<table width="97%" border="0" cellpadding="3" cellspacing="0">
+				<tr>
+                    <td height="35">
+					<div style="float:left">
+					<strong style="color: #000000; font-size:18px;">{#$user.username#} </strong>
+					&nbsp;
+					<span style="color: #C3C3C3">ID:{#$user.uid#}</span>
+					&nbsp;&nbsp;
+					</div>	
+					{#if $sms.open=="1"#}			
+						{#if $user.mobile_audit=="1"#}
+						<div class="us_audit_mobile vtip idlink" title="手机已认证，手机号：{#$user.mobile#}" id="personal_user.php?act=user_mobile"></div>
+						{#else#}
+						<div class="us_audit_mobile_no vtip idlink" title="手机未认证" id="personal_user.php?act=user_mobile"></div>
+						{#/if#}
+					{#/if#}				
+					{#if $user.email_audit=="1"#}
+					<div class="us_audit_email vtip idlink" id="personal_user.php?act=user_email" title="邮箱已认证，邮箱：{#$user.email#}"></div>
+					{#else#}
+					<div class="us_audit_email_no vtip idlink"  id="personal_user.php?act=user_email" title="邮箱未认证"></div>
+					{#/if#}				
+					<div class="clear"></div>
+					<script type="text/javascript">
+					$(document).ready(function()
+					{
+						$(".idlink").click(function(){
+						window.location.href=$(this).attr("id");
+						});	
+					});
+					</script>
+					</td>
+                  </tr>
+                
+				<tr>
+                    <td style="color: #999999">
+					上次登录时间：{#$user.last_login_time|date_format:"%Y-%m-%d"#}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					上次登录IP：{#$user.last_login_ip#}
+					</td>
+                  </tr>
+                  <tr>
+                    <td>
+					{#if $count_resume==0#}
+				  您还没有创建简历。<a href="personal_resume.php?act=make1">[立即创建]</a>	
+				  {#else#}
+				  您创建了 <strong  style="color:#FF0000">{#$count_resume#}</strong> 份简历 &nbsp;&nbsp;&nbsp;<a href="personal_resume.php?act=resume_list">[管理简历]</a> &nbsp;&nbsp;&nbsp; <a href="personal_resume.php?act=refresh">[提升简历排名]</a>	 &nbsp;&nbsp;&nbsp; <a href="personal_resume.php?act=talent">[升级简历]</a>
+				  {#/if#}					</td>
+                  </tr>
+                  <tr>
+                    <td class="link_lan">
+					收到的面试邀请：<a href="personal_apply.php?act=interview" {#if $count_interview=="0"#}style="color:#666666"{#/if#}>({#$count_interview#})</a>&nbsp;&nbsp;&nbsp;
+					已申请职位：<a href="personal_apply.php?act=apply_jobs" {#if $count_apply=="0"#} style="color:#666666"{#/if#}>({#$count_apply#})</a>&nbsp;&nbsp;&nbsp;
+					职位收藏夹：<a href="personal_apply.php?act=favorites" {#if $count_library=="0"#} style="color:#666666"{#/if#}>({#$count_library#})</a>					</td>
+                  </tr>
+                </table></td>
+              </tr>
+      </table>
+			</td>
+            <td width="230">
+			
+			<table width="100%" border="0" cellpadding="0" cellspacing="0"  >
+              <tr>
+                <td>
+				<div class="resume_add idlink" id="personal_resume.php?act=make1"></div>
+				</td>
+                <td>
+				
+				<div class="resume_list idlink" id="personal_resume.php?act=resume_list"></div>
+				</td>
+              </tr>
+            </table>
+			<script type="text/javascript">
+					$(document).ready(function()
+					{
+						$(".idlink").click(function(){
+						window.location.href=$(this).attr("id");
+						});	
+						
+						$(".resume_add").hover(function()	{$(this).addClass("resume_add_hover")},function(){$(this).removeClass("resume_add_hover")});
+						$(".resume_list").hover(function()	{$(this).addClass("resume_list_hover")},function(){$(this).removeClass("resume_list_hover")});
+						
+					});
+			</script>
+			</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+	
+	
+	
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0"  style="margin-top:8px;">
+        <tr>
+          <td valign="top">
+		  
+		  <table width="580" border="0" cellpadding="0" cellspacing="1" bgcolor="#CDE6F3"  >
+  <tr>
+    <td class="us_index_title_bg">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="us_index_title">您可能感兴趣的职位</td>
+    <td align="right"><a href="{#"QS_jobslist"|qishi_url#}"  target="_blank">更多</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+</table>
+
+	</td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFFFFF">
+ 
+ <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"  class="link_lan">
+                        <tr>
+                          <td height="28" class="us_list_title" style="padding-left:10px;">职位名称</td>
+                          <td class="us_list_title">所属企业</td>
+                          <td width="80" align="center" class="us_list_title">薪资</td>
+                          <td width="100" align="center" class="us_list_title">更新日期</td>
+                        </tr>
+						{#qishi_jobs_list set="列表名:jobs,显示数目:5,填补字符:...,职位名长度:12,排序:null,职位大类:"|cat:$interest_id#}
+{#foreach from=$jobs item=list#}
+                        <tr>
+                          <td height="30" style="padding-left:10px;"><a href="{#$list.jobs_url#}" target="_blank">{#$list.jobs_name#}</a></td>
+                          <td ><a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a></td>
+                          <td align="center" >{#$list.wage_cn#}</td>
+                          <td align="center">{#$list.refreshtime|date_format:"%Y-%m-%d"#}</td>
+                        </tr>
+                        <tr>
+                          <td height="22" colspan="4" valign="top" class="us_list" style="padding-left:10px;">
+						  
+						  工作地区：{#$list.district_cn#}&nbsp;&nbsp;|&nbsp;&nbsp;
+						  学历要求：{#$list.education_cn#}&nbsp;&nbsp;|&nbsp;&nbsp;
+	 点击：{#$list.click#}次&nbsp;&nbsp;|&nbsp;&nbsp;
+							招聘截至：{#$list.deadline|date_format:"%Y-%m-%d"#}						  </td>
+                        </tr>
+						{#/foreach#}
+                  </table>
+					  {#if !$jobs#}
+			<div class="us_list_no_content">没有匹配的信息</div><br />
+		  {#/if#}
+ 
+ </td>
+  </tr>
+</table>
+		  
+		  
+		  
+          </td>
+          <td width="200" valign="top">
+		  
+ 
+		  
+		  
+		  	<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CDE6F3"  >
+  <tr>
+    <td class="us_index_title_bg">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="us_index_title">公告</td>
+    <td align="right"><a href="personal_notice.php?act=notice">更多</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+</table>
+
+	</td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFFFFF" style="padding-top:6px; padding-bottom:6px;">
+	<ul class="link_bk us_index_list">
+{#foreach from=$notice item=list#}
+<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+{#/foreach#}
+</ul>
+ 
+	</td>
+  </tr>
+</table>
+		  
+		  
+		  
+		  </td>
+        </tr>
+      </table>
+	  
+	  
+	
+	
+	
+	</td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

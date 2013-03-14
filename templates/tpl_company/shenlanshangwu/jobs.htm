@@ -1,0 +1,265 @@
+{#qishi_jobs_show set="列表名:show,职位ID:GET[id]"#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$show.jobs_name#} - {#$show.companyname#} - {#$QISHI.site_name#}</title>
+<meta name="description" content="{#$show.companyname#}招聘{#$show.jobs_name#}">
+<meta name="keywords" content="{#$show.jobs_name#}，{#$show.companyname#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$user_tpl#}css/css.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type="text/javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.dialog.js" type='text/javascript' ></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	  $(".toptabs").idTabs();
+	  $(".toptabs  a").click(function(){
+		$(this).blur();
+		});	
+		var id="{#$show.id#}";
+		var company_id="{#$show.company_id#}";
+		var tsTimeStamp= new Date().getTime();
+		$.get("{#$QISHI.site_dir#}plus/ajax_click.php", { "id": id,"time":tsTimeStamp,"act":"jobs_click"},
+			function (data,textStatus)
+			 {			
+				$(".click").html(data);
+			 }
+		);
+		$.get("{#$QISHI.site_dir#}plus/ajax_contact.php", { "id": id,"time":tsTimeStamp,"act":"jobs_contact"},
+			function (data,textStatus)
+			 {			
+				$("#jobs_contact").html(data);
+			 }
+		);
+		$.get("{#$QISHI.site_dir#}plus/ajax_contact.php", { "id": company_id,"time":tsTimeStamp,"act":"company_contact"},
+			function (data,textStatus)
+			 {			
+				$("#company_contact").html(data);
+			 }
+		);
+		//申请职位
+		$(".app_jobs").click(function(){
+		dialog("申请职位","url:get?{#$QISHI.site_dir#}user/user_apply_jobs.php?id="+id+"&act=app","500px","auto","");
+		});	
+		//单个添加收藏
+		$(".add_favorites").click(function(){
+		dialog("加入收藏","url:get?{#$QISHI.site_dir#}user/user_favorites_job.php?id="+id+"&act=add","500px","auto","");
+		});
+});
+</script>
+</head>
+<body>
+<div class="head_top">
+	<div class="head_top_box">
+			<div class="head_top_box_left link_lan"><span id="top_loginform"></span></div>
+			<div class="head_top_box_right link_bk">
+			{#include file="top_nav.htm"#}
+			</div>
+			<div class="clear"></div>
+	</div>
+</div>
+<div class="head">
+	<div class="head_logo">
+		<a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+	</div>
+	<div class="head_logo_right">
+			{#qishi_ad set="显示数目:1,调用名称:QS_alltopimg,列表名:ad"#}
+			{#foreach from=$ad item=list#}
+			<a href="{#$list.img_url#}"><img src="{#$list.img_path#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+			{#/foreach#}
+	</div>
+	<div class="clear"></div>
+</div>
+
+
+<div class="jobstop">
+  <div class="tit">
+ <h1>{#$show.company.companyname#}</h1>
+ 			{#if $show.company.audit=="1"#}
+			<div class="company_license1" title="营业执照已验证"></div>
+			{#else#}
+			<div class="company_license2" title="营业执照未验证"></div>
+			{#/if#}
+			<div class="clear"></div>
+ <div class="date link_orangeu">所在地区：<a href="{#"QS_jobslist"|qishi_url#}?district={#$show.district#}&sdistrict={#$show.sdistrict#}" target="_blank">{#$show.district_cn#}</a>&nbsp;&nbsp;&nbsp;更新时间：{#$show.company.refreshtime|date_format:"%Y-%m-%d"#}&nbsp;&nbsp;&nbsp;点击：<span class="click"></span>次</div>
+  </div>
+</div>
+
+<div class="jobnav link_white">
+<ul>
+<li><a href="{#$show.company_url#}">首 页</a></li>
+<li><a href="#navcom">公司简介</a></li>
+<li><a href="#navjob">招聘职位</a></li>
+<li><a href="#navcontact">联系我们</a></li>
+<li><a href="#navmap">公司位置</a></li>          
+<div class="clear"></div>
+</ul>
+</div>
+
+
+<div class="company-show">
+  <div class="left">
+    <div class="show link_lan">
+ 	<h1>
+ 	{#$show.jobs_name#}
+	{#if $show.emergency=="1"#} <img src="{#$QISHI.site_template#}images/61.gif" border="0" align="absmiddle" />{#/if#}
+	{#if $show.recommend=="1"#} <img src="{#$QISHI.site_template#}images/62.gif" border="0" align="absmiddle" />{#/if#}
+	</h1> 
+			<div class="tip ">
+			{#if $show.deadline>$smarty.now#}			招聘进行中，欢迎投递简历，更新时间：{#$show.refreshtime|date_format:"%Y-%m-%d"#}，截止日期为：{#$show.deadline|date_format:"%Y-%m-%d"#}，浏览次数：<span class="click"></span>次
+			{#else#}
+			<span style="color:#FF0000">此信息已经到期！</span>
+			{#/if#}
+			</div>			
+		    <div class="item">
+		    <ul class="link_bku">
+		  <li>招聘职位：{#$show.jobs_name#}</li>
+		  <li>招聘公司：<a href="{#$show.company_url#}">{#$show.companyname#}</a></li>
+		  <li>职位类型：<a href="{#"QS_jobslist"|qishi_url#}?nature={#$show.nature#}" target="_blank">{#$show.nature_cn#}</a></li>
+		  <li>薪金待遇：<a href="{#"QS_jobslist"|qishi_url#}?wage={#$show.wage#}" target="_blank">{#$show.wage_cn#}</a></li>
+		  <li>招聘人数：{#$show.amount#} 人</li>
+		  <li>性别要求：{#$show.sex_cn#}</li>
+		  <li>学历要求：{#$show.education_cn#}</li>
+		  <li>工作地区：<a href="{#"QS_jobslist"|qishi_url#}?district={#$show.district#}&sdistrict={#$show.sdistrict#}" target="_blank">{#$show.district_cn#}</a>{#if $show.street_cn#}&nbsp;&nbsp;<a href="{#"QS_street"|qishi_url#}?streetid={#$show.street#}" target="_blank">{#$show.street_cn#}</a>{#/if#}{#if $show.officebuilding_cn#}&nbsp;&nbsp;<a href="{#"QS_officebuilding"|qishi_url#}?officebuildingid={#$show.officebuilding#}" target="_blank">{#$show.officebuilding_cn#}</a>{#/if#}</li>
+		  <li>所属行业：<a href="{#"QS_jobslist"|qishi_url#}?trade={#$show.trade#}" target="_blank">{#$show.trade_cn#}</a></li>		 
+		  <li>工作经验：{#$show.experience_cn#}</li>
+		  <li>查看次数：<span class="click"></span>次</li>
+		  <li>发布日期：{#$show.addtime|date_format:"%Y-%m-%d"#}</li>
+		  <li>刷新日期：{#$show.refreshtime|date_format:"%Y-%m-%d  %H:%M"#}</li>
+		  <li>截止日期：{#$show.deadline|date_format:"%Y-%m-%d"#}</li>
+		  <li  style="width:90%">标签：{#foreach from=$show.tag item=tagli#}<a href="{#"QS_jobtag"|qishi_url#}?jobtag={#$tagli.0#}" target="_blank">{#$tagli.1#}</a>&nbsp;&nbsp;{#foreachelse#} 无{#/foreach#}</li>
+		  </ul>	
+		  <div class="clear"></div>	
+		  </div>
+	<div class="title"><strong>职位描述</strong></div>
+		  <div class="txt">{#$show.contents|nl2br#}</div>
+	
+	<div class="title" id="navcontact"><strong>联系方式</strong></div>
+		  <!--AJAX 联系方式 --><div class="txt"><div id="jobs_contact"></div></div>
+		   <div align="center" class="link_lan"><br />
+			<img src="{#$QISHI.site_template#}images/60.gif" border="0"  class="app_jobs"    style="cursor:pointer"/><br />
+			<br />
+			<a href="javascript:void(0)" class="add_favorites" >[收藏职位]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{#$QISHI.site_dir#}user/personal/personal_report.php?act=report&jobs_id={#$smarty.get.id#}&jobs_name={#$show.jobs_name#}&jobs_addtime={#$show.addtime#}">[举报此信息]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="window.opener='anyone';window.close();">[关闭本页]</a><br />
+			 </div>
+			 <div class="share">
+		
+		
+				<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+        <a class="bds_qzone">QQ空间</a>
+        <a class="bds_tsina">新浪微博</a>
+        <a class="bds_tqq">腾讯微博</a>
+        <a class="bds_renren">人人网</a>
+        <span class="bds_more">更多</span>
+    </div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=659075" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+		<br />
+
+			</div>
+		  
+		  
+		  
+	<div class="title" id="navmap"><strong>公司位置</strong></div>
+		<div class="txt">	 
+			 {#if $show.company.map_open=="1" && $show.company.map_x && $show.company.map_y#}
+			   <script src="http://api.map.baidu.com/api?v=1.2" type="text/javascript"></script>
+			  <div style="width:100%;height:200px ; border:1px #CCCCCC solid; margin:0 auto; margin-top:6px;" id="map"></div>
+				<script type="text/javascript">
+				var map = new BMap.Map("map");   
+				var point = new BMap.Point({#$show.company.map_x#}, {#$show.company.map_y#});   
+				map.centerAndZoom(point, {#$show.company.map_zoom#});
+				var opts = {type: BMAP_NAVIGATION_CONTROL_SMALL,anchor: BMAP_ANCHOR_TOP_RIGHT}
+				map.addControl(new BMap.NavigationControl(opts)); //添加鱼骨
+				//map.enableScrollWheelZoom();//启用滚轮放大缩小，默认禁用。
+				// 创建标注
+				var qs_marker = new BMap.Marker(point);           
+				map.addOverlay(qs_marker); 
+				// 创建标注 
+				// 打开信息窗口 
+				var opts = {   
+				  width : 150,     // 信息窗口宽度   
+				  height: 50,     // 信息窗口高度   
+				  title : "{#$show.company.companyname#}"  // 信息窗口标题   
+				}   
+				var infoWindow = new BMap.InfoWindow("{#$show.company.address#}", opts);  // 创建信息窗口对象   
+				map.openInfoWindow(infoWindow, point);
+				// 打开信息窗口  			
+				</script>	
+				{#else#} 
+				该公司没有标注具体位置。
+			  {#/if#}
+			  </div> 
+	 
+		 <div class="title" id="navjob"><strong>招聘职位</strong></div>
+		 <div class="txt">
+			 <table width="100%" border="0" cellspacing="0" cellpadding="6" >
+			  <tr>
+				<td bgcolor="#F5FAFE" class="listtit">招聘职位</td>
+				<td bgcolor="#F5FAFE" class="listtit">招聘人数</td>
+				<td bgcolor="#F5FAFE" class="listtit">工作地区</td>
+				<td bgcolor="#F5FAFE" class="listtit">学历要求</td>
+				<td align="center" bgcolor="#F5FAFE" class="listtit">刷新日期</td>
+				<td align="center" bgcolor="#F5FAFE" class="listtit">截至日期</td>
+			  </tr>
+			  {#qishi_jobs_list set="列表名:jobs,填补字符:...,职位名长度:14,显示数目:50,会员UID:"|cat:$show.uid#}
+			  {#foreach from=$jobs item=list#}
+			  <tr>
+				<td class="list">
+				<a href="{#$list.jobs_url#}">{#$list.jobs_name#}</a>
+				{#if $list.emergency=="1"#} <img src="{#$QISHI.site_template#}images/61.gif" border="0" align="absmiddle" />{#/if#}
+							{#if $list.recommend=="1"#} <img src="{#$QISHI.site_template#}images/62.gif" border="0" align="absmiddle" />{#/if#}			
+				</td>
+				<td class="list">{#$list.amount#}人</td>
+				<td class="list">{#$list.district_cn#}</td>
+				<td class="list">{#$list.education_cn#}</td>
+				<td align="center" class="list">{#$list.refreshtime_cn#}</td>
+				<td align="center" class="list">{#$list.deadline|date_format:"%Y-%m-%d"#}</td>
+			  </tr>
+			  {#/foreach#}
+	  </table>
+	  </div>
+	  
+	   		<div class="title" id="navcom"><strong>公司简介</strong></div>	 
+			<div class="txt">
+			<img src="{#$show.company.logo#}" border="0"  style="float:left; margin-right:8px; "/> {#$show.company.contents|nl2br#}
+			<div class="clear"></div> 
+			</div>
+			
+			
+			 
+	</div>
+  </div>
+  <div class="right">
+		  <div class="txtbox">
+				  <div class="tit">企业档案</div>	  
+				  <div class="txt">
+					  <ul class="link_bku">
+						<li>企业性质：{#$show.company.nature_cn#}</li>
+						<li>所属行业：<a href="{#"QS_jobslist"|qishi_url#}?trade={#$show.trade#}" target="_blank">{#$show.trade_cn#}</a></li>
+						<li>注册资金：{#if $show.company.registered#}{#$show.company.registered#}万{#$show.company.currency#}{#else#}未填写{#/if#}</li>
+						<li>公司规模：<a href="{#"QS_jobslist"|qishi_url#}?scale={#$show.scale#}" target="_blank">{#$show.company.scale_cn#}</a></li>
+						<li>所在地区：<a href="{#"QS_jobslist"|qishi_url#}?district={#$show.district#}&sdistrict={#$show.sdistrict#}" target="_blank">{#$show.district_cn#}</a></li>
+						<li>添加时间：{#$show.company.addtime|date_format:"%Y-%m-%d"#}</li>
+						<li>浏览次数：<span class="click"></span> 次</li>
+					  </ul>
+				  </div>
+	</div>
+			  
+  </div>
+  <div class="clear"></div>
+</div>
+
+ 
+{#include file="footer.htm"#}
+</body>
+</html>

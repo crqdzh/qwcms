@@ -1,0 +1,46 @@
+<div class="lia t_so" id="t_so">
+搜索
+<div class="op_search" id="op_search"> 
+	<div class="stit" ><div>搜索</div></div>
+	<div class="sform">
+	<form action="" method="get" name="topsearch">
+	  <input name="key" type="text"  class="key"/>
+	  <div class="sutleft">
+	  <input type="button" value="搜职位" class="but70"  id="{#"QS_jobslist"|qishi_url#}"/>
+	  </div>
+	  <div class="sutright">
+	  <input type="button" value="搜简历" class="but70" id="{#"QS_resumelist"|qishi_url#}"/>
+	   </div>	   
+	   <div class="clear"></div>
+	   </form>
+	</div>
+</div>
+</div>
+<a href="{#$QISHI.site_dir#}wap/"  class="lia t_m">手机频道</a>
+<a href="{#"QS_help"|qishi_url#}" class="lia">帮助</a>
+<a href="{#$QISHI.site_dir#}" class="lia">网站首页</a>
+<a href="{#$QISHI.site_dir#}plus/shortcut.php" style="color:#FF3300" class="lia">保存到桌面</a>
+<script type="text/javascript">
+//顶部部登录
+$.get("{#$QISHI.site_dir#}plus/ajax_user.php", {"act":"top_loginform"},
+function (data,textStatus)
+{			
+$("#top_loginform").html(data);
+}
+);
+//
+$("#t_so").hover(
+function(){
+$("#t_so").css("position","relative");
+$("#op_search").show();
+},
+function(){
+$("#op_search").hide();
+$("#t_so").css("position","");	
+}
+);
+$("form[name=topsearch] .but70").click(function(){
+$("form[name=topsearch]").attr("action",$(this).attr("id"));
+$("form[name=topsearch]").submit();
+});
+</script>

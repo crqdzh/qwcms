@@ -1,0 +1,90 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#{#$leftmenu#}box").css("display","block");
+	 
+	$(".user_submit").hover(function()	{$(this).addClass("user_submit_on")},function(){$(this).removeClass("user_submit_on")});
+	$(".user_long_submit").hover(function(){$(this).addClass("user_long_submit_on")},function(){$(this).removeClass("user_long_submit_on")});
+	$('#chkAll').click(function(){$("#form1 :checkbox").attr('checked',$("#chk").attr('checked'))});
+	$("#list tr:gt(0)").hover(
+		function()
+			{
+			$(this).css("background-color","#F5FCFE");
+			},
+			function()
+			{
+			$(this).css("background-color","");
+			}
+		);
+	$("input[type='text']").focus(function(){
+	$(this).css("border-color","#0066CC #9DCEFF #9DCEFF #0066CC");
+	});
+	$("input[type='text']").blur(function(){
+	$(this).css("border-color","");
+	});
+});
+</script>
+<div class="head_top">
+<div class="head_top_box">
+<div class="head_top_box_left link_lan"><span id="top_loginform"></span></div>
+<div class="head_top_box_right link_bk">
+{#include file="top_nav.htm"#}
+</div>
+<div class="clear"></div>
+</div>
+</div>
+<div class="head">
+<div class="head_logo">
+<a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+</div>
+<div class="head_logo_right">
+</div>
+<div class="clear"></div>
+</div>
+<!--导航 -->
+<div class="nav_outer">
+	<div class="left"></div>
+	<div class="center">
+		<div class="nav">
+			<ul>
+				<li {#if $leftmenu=="index"#}class="selected"{#/if#}><A href="personal_index.php?act=" >中心首页</A></li>
+				<li {#if $leftmenu=="resume"#}class="selected"{#/if#}><A href="personal_resume.php?act=resume_list" >简历管理</A></li>
+				<li {#if $leftmenu=="apply"#}class="selected"{#/if#}><A href="personal_apply.php?act=apply_jobs"  >求职管理</A></li>
+				<li {#if $leftmenu=="user"#}class="selected"{#/if#}><A href="personal_user.php?act=user_status"  >账户管理</A></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+			<div class="nav_bottom">		 
+			  <!--下拉菜单 -->
+			  <div  style="display:none; padding-left:8px;" id="indexbox">
+				<span style="color:#FFFFFF">欢迎您登录会员中心</span>
+			  </div>
+				<div  style="display:none; padding-left:30px;"  id="resumebox">
+				<a href="personal_resume.php?act=make1">创建新简历</a>
+				<a href="personal_resume.php?act=resume_list">简历管理</a>
+				<a href="personal_resume.php?act=talent">升级简历</a>
+				</div>
+				<div style="display:none; padding-left:80px;" id="applybox">
+				<a href="{#"QS_jobslist"|qishi_url#}"  target="_blank">搜索职位</a>
+				<a href="personal_apply.php?act=down">谁下载了我的简历</a>
+				<a href="personal_apply.php?act=interview">收到的面试邀请</a>
+				<a href="personal_apply.php?act=apply_jobs">申请过的职位</a>
+				<a href="personal_apply.php?act=favorites">职位收藏夹</a>
+				</div>
+				<div  style="display:none; padding-left:125px;" id="userbox">
+				<a href="personal_user.php?act=userprofile">个人资料</a>
+				<a href="personal_user.php?act=user_email">邮箱认证</a>
+				{#if $sms.open=="1"#}
+				<a href="personal_user.php?act=user_mobile">手机认证</a>
+				{#/if#}
+				<a href="personal_user.php?act=user_status">帐号状态</a>
+				<a href="personal_user.php?act=password_edit">密码修改</a>
+				<a href="personal_user.php?act=feedback">意见建议</a>
+				<a href="{#"QS_login"|qishi_url#}?act=logout">安全退出</a>
+				</div>
+		  </div>
+	
+	</div>
+	<div class="right"></div>
+	<div class="clear"></div>
+</div>

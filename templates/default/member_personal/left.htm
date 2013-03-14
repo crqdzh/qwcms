@@ -1,0 +1,81 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+//
+	$(".left_menu_btop li").hover(
+		function()
+		{
+			$(this).css("background-color","#E9FBFE");
+			},
+			function()
+			{
+			$(this).css("background-color","");
+			}
+		);
+	$(".left_menu_bg").click(function(){
+		var tb=$(this).next();
+		var tb_display=tb.css("display");
+		if (tb_display=="block")
+		{
+		tb.css("display","none");
+		$(this).find("img").attr("src","{#$QISHI.site_template#}images/06.gif");
+		}
+		else
+		{
+		tb.css("display","block");
+		$(this).find("img").attr("src","{#$QISHI.site_template#}images/07.gif");
+		}
+	});
+
+});
+</script>
+<div class="left_menu_box">
+	<div class="left_menu_bg">
+		<div class="left_menu_tit">简历管理</div>
+		<div class="left_menu_img"><img src="{#$QISHI.site_template#}images/07.gif"  border="0" /></div>
+		<div class="clear"></div>
+	</div>
+	<div class="left_menu_btop">
+	<ul>
+			<li><a href="personal_resume.php?act=make1">创建新简历</a></li>
+			<li><a href="personal_resume.php?act=resume_list">简历管理</a></li>
+			<li><a href="personal_resume.php?act=talent">升级简历</a></li>
+			</ul>
+	</div>
+</div>
+<div class="left_menu_box">
+	<div class="left_menu_bg">
+		<div class="left_menu_tit">求职管理</div>
+		<div class="left_menu_img"><img src="{#$QISHI.site_template#}images/07.gif"  border="0" /></div>
+		<div class="clear"></div>
+	</div>
+	<div class="left_menu_btop">
+	<ul>
+			<li><a href="{#"QS_jobslist"|qishi_url#}" target="_blank">搜索职位</a></li>
+			<li><a href="personal_apply.php?act=down">谁下载了我的简历</a></li>
+			<li><a href="personal_apply.php?act=interview">我收到的面试邀请</a></li>
+			<li><a href="personal_apply.php?act=apply_jobs">我申请过的职位</a></li>
+			<li><a href="personal_apply.php?act=favorites">职位收藏夹</a></li>
+			</ul>
+	</div>
+</div>
+<div class="left_menu_box">
+	<div class="left_menu_bg">
+		<div class="left_menu_tit">账户管理</div>
+		<div class="left_menu_img"><img src="{#$QISHI.site_template#}images/07.gif"  border="0" /></div>
+		<div class="clear"></div>
+	</div>
+	<div class="left_menu_btop">
+	<ul>
+			<li><a href="personal_user.php?act=userprofile">个人资料</a></li>
+			<li><a href="personal_user.php?act=user_email">邮箱认证</a></li>
+			{#if $sms.open=="1"#}
+			<li><a href="personal_user.php?act=user_mobile">手机认证</a></li>
+			{#/if#}
+			<li><a href="personal_user.php?act=user_status">帐号状态</a></li>
+			<li><a href="personal_user.php?act=password_edit">密码修改</a></li>
+			<li><a  href="personal_user.php?act=feedback">意见建议</a></li>
+			<li><a href="{#"QS_login"|qishi_url#}?act=logout">安全退出</a></li>
+			</ul>
+	</div>
+</div>
